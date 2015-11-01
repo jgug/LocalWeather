@@ -15,16 +15,13 @@ import java.util.List;
 
 public class FetchWeatherHelper {
     private static final String FORECAST_ID = "forecast";
-    private static final String FORECAST_ATTRIBUTE = "onmousehover";
+    private static final String FORECAST_ATTRIBUTE = "onmouseover";
     private static final String FORECAST_ICON_ATTRIBUTE = "src";
 
     public List<WeatherObject> fetchWeather(String URL) {
-        return getWeather(getElements(getPageBody(URL)));
-    }
-
-    private String getPageBody(String url) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(url).build();
+        Request request = new Request.Builder().url("http://6.pogoda.by/26850").build();
+
         String body = "";
         try {
             Response response = client.newCall(request).execute();
@@ -32,18 +29,13 @@ public class FetchWeatherHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return body;
-    }
 
-    private Elements getElements(String pageBody) {
-        Document document = Jsoup.parse(pageBody);
-        Element element = document.getElementById(FORECAST_ID);
-        return element.getElementsByAttribute(FORECAST_ATTRIBUTE);
-    }
+        Document document = Jsoup.parse(body);
+        Element forecast = document.getElementById(FORECAST_ID);
+        Elements forecastItems = forecast.getElementsByAttribute(FORECAST_ATTRIBUTE);
 
-    private List<WeatherObject> getWeather(Elements elements) {
         List<WeatherObject> weatherObjects = new ArrayList<>();
-        for (Element item : elements) {
+        for (Element item : forecastItems) {
             WeatherObject weatherObject = new WeatherObject();
             weatherObject.setDayPart(item.child(0).data());
             weatherObject.setTemperature(item.child(1).data());
@@ -54,6 +46,7 @@ public class FetchWeatherHelper {
             weatherObject.setHumidity(item.child(6).data());
             weatherObjects.add(weatherObject);
         }
+
         return weatherObjects;
     }
 }
