@@ -71,3 +71,9 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+.idea/*
+*.iml
+gradlew
+gradlew.bat
+gradle/wrapper/*
