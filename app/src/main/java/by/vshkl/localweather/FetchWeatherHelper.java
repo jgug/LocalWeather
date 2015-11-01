@@ -18,7 +18,7 @@ public class FetchWeatherHelper {
     private static final String FORECAST_ATTRIBUTE = "onmousehover";
     private static final String FORECAST_ICON_ATTRIBUTE = "src";
 
-    public List<WeatherObject> FetchWeather(String URL) {
+    public List<WeatherObject> fetchWeather(String URL) {
         return getWeather(getElements(getPageBody(URL)));
     }
 

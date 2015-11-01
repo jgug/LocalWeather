@@ -80,4 +80,17 @@ public class WeatherObject {
     public void setIconUrl(String iconUrl) {
         this.iconUrl = URL + iconUrl;
     }
+
+    @Override
+    public String toString() {
+        return "WeatherObject{" +
+                "dayPart='" + dayPart + '\'' +
+                ", description='" + description + '\'' +
+                ", wind='" + wind + '\'' +
+                ", pressure='" + pressure + '\'' +
+                ", humidity='" + humidity + '\'' +
+                ", temperature='" + temperature + '\'' +
+                ", iconUrl='" + iconUrl + '\'' +
+                '}';
+    }
 }
