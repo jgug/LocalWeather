@@ -37,13 +37,13 @@ public class FetchWeatherHelper {
         List<WeatherObject> weatherObjects = new ArrayList<>();
         for (Element item : forecastItems) {
             WeatherObject weatherObject = new WeatherObject();
-            weatherObject.setDayPart(item.child(0).data());
-            weatherObject.setTemperature(item.child(1).data());
+            weatherObject.setDayPart(item.child(0).text());
+            weatherObject.setTemperature(item.child(1).text());
             weatherObject.setIconUrl(item.child(2).attr(FORECAST_ICON_ATTRIBUTE));
-            weatherObject.setDescription(item.child(3).data());
-            weatherObject.setWind(item.child(4).data());
-            weatherObject.setPressure(item.child(5).data());
-            weatherObject.setHumidity(item.child(6).data());
+            weatherObject.setDescription(item.child(3).text());
+            weatherObject.setWind(item.child(4).text());
+            weatherObject.setPressure(item.child(5).text());
+            weatherObject.setHumidity(item.child(6).text());
             weatherObjects.add(weatherObject);
         }
 
