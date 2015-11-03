@@ -2,7 +2,7 @@ package by.vshkl.localweather.services;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.os.ResultReceiver;
+import android.os.ResultReceiver;
 
 public class FetchWeatherResultReceiver extends ResultReceiver {
     private Receiver receiver;
