@@ -1,4 +1,4 @@
-package by.vshkl.localweather;
+package by.vshkl.localweather.weather;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;

@@ -70,7 +70,7 @@
         />
 
     <TextView
-        android:id="@+id/weather_temp_max"
+        android:id="@+id/weather_temp"
         android:layout_width="48dp"
         android:layout_height="32dp"
         android:textSize="16sp"
@@ -78,17 +78,6 @@
         android:text="+7"
         android:layout_alignTop="@+id/weather_wind"
         android:layout_toEndOf="@+id/weather_wind"
-        />
-
-    <TextView
-        android:id="@+id/weather_temp_min"
-        android:layout_width="48dp"
-        android:layout_height="32dp"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:text="+5"
-        android:layout_alignBottom="@+id/weather_humidity"
-        android:layout_toEndOf="@+id/weather_pressure"
         />
 
 </RelativeLayout>

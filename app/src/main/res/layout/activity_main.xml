@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/weather_fragment"
-        android:name="by.vshkl.localweather.WeatherFragment"
+        android:name="by.vshkl.localweather.ui.WeatherFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

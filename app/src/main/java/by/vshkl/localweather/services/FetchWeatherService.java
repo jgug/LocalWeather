@@ -1,10 +1,10 @@
-package by.vshkl.localweather;
+package by.vshkl.localweather.services;
 
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
 
-import java.util.List;
+import by.vshkl.localweather.weather.FetchWeatherHelper;
 
 public class FetchWeatherService extends IntentService {
     private static final String ACTION_FETCH_WEATHER = "by.vshkl.localweather.action.ACTION_FETCH_WEATHER";

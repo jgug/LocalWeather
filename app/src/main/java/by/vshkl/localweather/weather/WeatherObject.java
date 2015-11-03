@@ -1,4 +1,4 @@
-package by.vshkl.localweather;
+package by.vshkl.localweather.weather;
 
 public class WeatherObject {
     private static final String URL = "http://6.pogoda.by/";
