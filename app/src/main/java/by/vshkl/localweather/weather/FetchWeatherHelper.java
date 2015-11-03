@@ -39,6 +39,9 @@ public class FetchWeatherHelper {
 
         Document document = Jsoup.parse(body);
         Element forecast = document.getElementById(FORECAST_ID);
+        if (forecast == null) {
+            return null;
+        }
         Elements forecastItems = forecast.getElementsByAttribute(FORECAST_ATTRIBUTE);
 
         List<WeatherObject> weatherObjects = new ArrayList<>();

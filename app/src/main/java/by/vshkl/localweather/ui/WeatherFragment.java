@@ -44,5 +44,6 @@ public class WeatherFragment extends Fragment {
         } else {
             adapter.updateAdapter(list);
         }
+        recyclerView.setAdapter(adapter);
     }
 }

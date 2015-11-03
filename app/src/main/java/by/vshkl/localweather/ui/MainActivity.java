@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (isNetworkAvailable()) {
             startService();
         } else {
+            swipeRefreshLayout.setRefreshing(false);
             Toast.makeText(this, "No network connection", Toast.LENGTH_SHORT).show();
         }
     }
