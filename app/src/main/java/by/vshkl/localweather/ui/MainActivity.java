@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void onReceiverResult(int resultCode, Bundle resultData) {
                 if (resultCode == RESULT_OK) {
                     List<WeatherObject> list = resultData.getParcelableArrayList(EXTRA_LIST);
+                    for (WeatherObject object : list) {
+                        System.out.println(object.toString());
+                    }
                 }
             }
         });
