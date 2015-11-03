@@ -1,6 +1,9 @@
 package by.vshkl.localweather.weather;
 
-public class WeatherObject {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class WeatherObject implements Parcelable {
     private static final String URL = "http://6.pogoda.by/";
 
     private String dayPart;
@@ -23,6 +26,16 @@ public class WeatherObject {
         this.humidity = humidity;
         this.temperature = temperature;
         this.iconUrl = iconUrl;
+    }
+
+    public WeatherObject(Parcel parcel) {
+        dayPart = parcel.readString();
+        description = parcel.readString();
+        wind = parcel.readString();
+        pressure = parcel.readString();
+        humidity = parcel.readString();
+        temperature = parcel.readString();
+        iconUrl = parcel.readString();
     }
 
     public String getDayPart() {
@@ -93,4 +106,34 @@ public class WeatherObject {
                 ", iconUrl='" + iconUrl + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(dayPart);
+        dest.writeString(description);
+        dest.writeString(wind);
+        dest.writeString(pressure);
+        dest.writeString(humidity);
+        dest.writeString(temperature);
+        dest.writeString(iconUrl);
+    }
+
+    public static final Parcelable.Creator<WeatherObject> CREATOR =
+            new Parcelable.Creator<WeatherObject>() {
+
+        @Override
+        public WeatherObject createFromParcel(Parcel source) {
+            return new WeatherObject(source);
+        }
+
+        @Override
+        public WeatherObject[] newArray(int size) {
+            return new WeatherObject[size];
+        }
+    };
 }
