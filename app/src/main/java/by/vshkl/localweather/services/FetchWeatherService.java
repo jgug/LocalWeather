@@ -29,12 +29,16 @@ public class FetchWeatherService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_FETCH_WEATHER.equals(action)) {
+                receiver = intent.getParcelableExtra(EXTRA_RECEIVER);
                 FetchWeatherHelper helper = new FetchWeatherHelper();
                 List<WeatherObject> list = helper.fetchWeather(URL);
-                receiver = intent.getParcelableExtra(EXTRA_RECEIVER);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(EXTRA_LIST, (ArrayList<WeatherObject>) list);
-                receiver.send(Activity.RESULT_OK, bundle);
+                if (list != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList(EXTRA_LIST, (ArrayList<WeatherObject>) list);
+                    receiver.send(Activity.RESULT_OK, bundle);
+                } else {
+                    receiver.send(Activity.RESULT_CANCELED, new Bundle());
+                }
             }
         }
     }

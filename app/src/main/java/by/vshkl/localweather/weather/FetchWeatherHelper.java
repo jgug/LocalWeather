@@ -25,7 +25,14 @@ public class FetchWeatherHelper {
         String body = "";
         try {
             Response response = client.newCall(request).execute();
-            body = response.body().string();
+            if (response != null) {
+                body = response.body().string();
+                if (body.contains("request was interrupted by the host!")) {
+                    return null;
+                }
+            } else {
+                return null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

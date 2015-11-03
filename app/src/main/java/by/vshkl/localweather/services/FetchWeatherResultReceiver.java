@@ -16,7 +16,7 @@ public class FetchWeatherResultReceiver extends ResultReceiver {
     }
 
     public interface Receiver {
-        public void onReceiverResult(int resultCode, Bundle resultData);
+        void onReceiverResult(int resultCode, Bundle resultData);
     }
 
     @Override

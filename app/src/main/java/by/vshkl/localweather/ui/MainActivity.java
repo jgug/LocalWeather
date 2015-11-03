@@ -56,9 +56,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             public void onReceiverResult(int resultCode, Bundle resultData) {
                 if (resultCode == RESULT_OK) {
                     List<WeatherObject> list = resultData.getParcelableArrayList(EXTRA_LIST);
-                    for (WeatherObject object : list) {
-                        System.out.println(object.toString());
-                    }
+                    swipeRefreshLayout.setRefreshing(false);
+                    WeatherFragment fragment = (WeatherFragment)
+                            getFragmentManager().findFragmentById(R.id.weather_fragment);
+                    fragment.setRecyclerViewAdapter(list);
+                } else if (resultCode == RESULT_CANCELED) {
+                    swipeRefreshLayout.setRefreshing(false);
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Something goes wrong...",
+                            Toast.LENGTH_SHORT
+                    ).show();
                 }
             }
         });

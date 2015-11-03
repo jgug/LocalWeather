@@ -44,4 +44,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
             return weatherList.size();
         }
     }
+
+    public void updateAdapter(List<WeatherObject> weatherList) {
+        this.weatherList = weatherList;
+    }
 }
