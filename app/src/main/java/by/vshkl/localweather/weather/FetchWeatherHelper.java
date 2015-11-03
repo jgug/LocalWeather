@@ -18,7 +18,7 @@ public class FetchWeatherHelper {
     private static final String FORECAST_ATTRIBUTE = "onmouseover";
     private static final String FORECAST_ICON_ATTRIBUTE = "src";
 
-    public List<WeatherObject> fetchWeather(String URL) {
+    public List<WeatherObject> fetchWeather() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url("http://6.pogoda.by/26850").build();
 
@@ -49,7 +49,7 @@ public class FetchWeatherHelper {
             WeatherObject weatherObject = new WeatherObject();
             weatherObject.setDayPart(item.child(0).text());
             weatherObject.setTemperature(item.child(1).text());
-            weatherObject.setIconUrl(item.child(2).attr(FORECAST_ICON_ATTRIBUTE));
+            weatherObject.setIconUrl(item.child(2).child(0).attr(FORECAST_ICON_ATTRIBUTE));
             weatherObject.setDescription(item.child(3).text());
             weatherObject.setWind(item.child(4).text());
             weatherObject.setPressure(item.child(5).text());

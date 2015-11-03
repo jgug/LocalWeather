@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import by.vshkl.localweather.R;
@@ -33,7 +35,12 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
         holder.weatherPressure.setText(weatherObject.getPressure());
         holder.weatherHumidity.setText(weatherObject.getHumidity());
         holder.weatherTemp.setText(weatherObject.getTemperature());
-        /*Weather image not implemented yet*/
+        Picasso.with(holder.weatherIcon.getContext()).setIndicatorsEnabled(true); /*For debug*/
+        Picasso.with(holder.weatherIcon.getContext())
+                .load(weatherObject.getIconUrl())
+                .fit()
+                .centerCrop()
+                .into(holder.weatherIcon);
     }
 
     @Override
