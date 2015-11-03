@@ -2,6 +2,7 @@ package by.vshkl.localweather.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,10 +22,15 @@ public class WeatherFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) container.findViewById(R.id.recycler_view);
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view =  inflater.inflate(R.layout.fragment_weather, container, false);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
 }
