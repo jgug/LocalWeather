@@ -31,7 +31,7 @@ public class FetchWeatherService extends IntentService {
             if (ACTION_FETCH_WEATHER.equals(action)) {
                 FetchWeatherHelper helper = new FetchWeatherHelper();
                 List<WeatherObject> list = helper.fetchWeather(URL);
-                FetchWeatherResultReceiver receiver = intent.getParcelableExtra(EXTRA_RECEIVER);
+                receiver = intent.getParcelableExtra(EXTRA_RECEIVER);
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(EXTRA_LIST, (ArrayList<WeatherObject>) list);
                 receiver.send(Activity.RESULT_OK, bundle);
