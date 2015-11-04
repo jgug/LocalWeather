@@ -14,7 +14,7 @@ import by.vshkl.localweather.R;
 import by.vshkl.localweather.weather.WeatherObject;
 
 public class WeatherFragment extends Fragment {
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private WeatherAdapter adapter;
 
     public WeatherFragment() {
