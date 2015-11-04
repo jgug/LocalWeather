@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:paddingEnd="8dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
     android:background="?android:attr/selectableItemBackground"
@@ -101,7 +101,7 @@
 
     <TextView
         android:id="@+id/weather_temp_max"
-        android:layout_width="32dp"
+        android:layout_width="36dp"
         android:layout_height="27dp"
         android:textSize="16sp"
         android:gravity="center"
@@ -112,7 +112,7 @@
 
     <TextView
         android:id="@+id/weather_temp_min"
-        android:layout_width="32dp"
+        android:layout_width="36dp"
         android:layout_height="27dp"
         android:textSize="16sp"
         android:gravity="center"
