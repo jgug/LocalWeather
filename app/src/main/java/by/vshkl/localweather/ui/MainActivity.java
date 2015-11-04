@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout.setOnRefreshListener(this);
         setupServiceReceiver();
         Paper.init(this);
+        readFromDb();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         fragment = (WeatherFragment) getFragmentManager().findFragmentById(R.id.weather_fragment);
-        readFromDb();
     }
 
     @Override
@@ -102,12 +102,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     }
 
     private void readFromDb() {
+        final MainActivity activity = this;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 if (Paper.book(DB_BOOK_NAME).exist(DB_ITEM_NAME)) {
                     final List<WeatherObject> list = Paper.book(DB_BOOK_NAME).read(DB_ITEM_NAME);
-                    fragment.recyclerView.post(new Runnable() {
+                    activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             fragment.recyclerView.setAdapter(new WeatherAdapter(list));
