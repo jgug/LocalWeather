@@ -11,20 +11,23 @@ public class WeatherObject implements Parcelable {
     private String wind;
     private String pressure;
     private String humidity;
-    private String temperature;
+    private String temperatureMax;
+    private String temperatureMin;
     private String iconUrl;
 
     public WeatherObject() {
     }
 
     public WeatherObject(String dayPart, String description, String wind,
-                         String pressure, String humidity, String temperature, String iconUrl) {
+                         String pressure,String humidity, String temperatureMax,
+                         String temperatureMin, String iconUrl) {
         this.dayPart = dayPart;
         this.description = description;
         this.wind = wind;
         this.pressure = pressure;
         this.humidity = humidity;
-        this.temperature = temperature;
+        this.temperatureMax = temperatureMax;
+        this.temperatureMin = temperatureMin;
         this.iconUrl = iconUrl;
     }
 
@@ -34,7 +37,8 @@ public class WeatherObject implements Parcelable {
         wind = parcel.readString();
         pressure = parcel.readString();
         humidity = parcel.readString();
-        temperature = parcel.readString();
+        temperatureMax = parcel.readString();
+        temperatureMin = parcel.readString();
         iconUrl = parcel.readString();
     }
 
@@ -58,8 +62,12 @@ public class WeatherObject implements Parcelable {
         return humidity;
     }
 
-    public String getTemperature() {
-        return temperature;
+    public String getTemperatureMax() {
+        return temperatureMax;
+    }
+
+    public String getTemperatureMin() {
+        return temperatureMin;
     }
 
     public String getIconUrl() {
@@ -67,7 +75,7 @@ public class WeatherObject implements Parcelable {
     }
 
     public void setDayPart(String dayPart) {
-        this.dayPart = dayPart;
+        this.dayPart =  (dayPart.substring(0, 1).toUpperCase()).concat(dayPart.substring(1));
     }
 
     public void setDescription(String description) {
@@ -86,8 +94,12 @@ public class WeatherObject implements Parcelable {
         this.humidity = humidity;
     }
 
-    public void setTemperature(String temperature) {
-        this.temperature = temperature;
+    public void setTemperatureMax(String temperatureMax) {
+        this.temperatureMax = temperatureMax;
+    }
+
+    public void setTemperatureMin(String temperatureMin) {
+        this.temperatureMin = temperatureMin;
     }
 
     public void setIconUrl(String iconUrl) {
@@ -102,7 +114,8 @@ public class WeatherObject implements Parcelable {
                 ", wind='" + wind + '\'' +
                 ", pressure='" + pressure + '\'' +
                 ", humidity='" + humidity + '\'' +
-                ", temperature='" + temperature + '\'' +
+                ", temperatureMax='" + temperatureMax + '\'' +
+                ", temperatureMin='" + temperatureMin + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
                 '}';
     }
@@ -119,21 +132,22 @@ public class WeatherObject implements Parcelable {
         dest.writeString(wind);
         dest.writeString(pressure);
         dest.writeString(humidity);
-        dest.writeString(temperature);
+        dest.writeString(temperatureMax);
+        dest.writeString(temperatureMin);
         dest.writeString(iconUrl);
     }
 
     public static final Parcelable.Creator<WeatherObject> CREATOR =
             new Parcelable.Creator<WeatherObject>() {
 
-        @Override
-        public WeatherObject createFromParcel(Parcel source) {
-            return new WeatherObject(source);
-        }
+                @Override
+                public WeatherObject createFromParcel(Parcel source) {
+                    return new WeatherObject(source);
+                }
 
-        @Override
-        public WeatherObject[] newArray(int size) {
-            return new WeatherObject[size];
-        }
-    };
+                @Override
+                public WeatherObject[] newArray(int size) {
+                    return new WeatherObject[size];
+                }
+            };
 }

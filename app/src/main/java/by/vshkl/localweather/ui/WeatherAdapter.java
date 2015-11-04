@@ -34,7 +34,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
         holder.weatherWind.setText(weatherObject.getWind());
         holder.weatherPressure.setText(weatherObject.getPressure());
         holder.weatherHumidity.setText(weatherObject.getHumidity());
-        holder.weatherTemp.setText(weatherObject.getTemperature());
+        holder.weatherTempMax.setText(weatherObject.getTemperatureMax());
+        holder.weatherTempMin.setText(weatherObject.getTemperatureMin());
         Picasso.with(holder.weatherIcon.getContext()).setIndicatorsEnabled(true); /*For debug*/
         Picasso.with(holder.weatherIcon.getContext())
                 .load(weatherObject.getIconUrl())

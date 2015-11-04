@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import by.vshkl.localweather.weather.WeatherObject;
 
@@ -50,7 +51,9 @@ public class FetchWeatherHelper {
         for (Element item : forecastItems) {
             WeatherObject weatherObject = new WeatherObject();
             weatherObject.setDayPart(item.child(0).text());
-            weatherObject.setTemperature(item.child(1).text());
+            String[] temperatures = item.child(1).text().split(Pattern.quote(".."));
+            weatherObject.setTemperatureMin(temperatures[0]);
+            weatherObject.setTemperatureMax(temperatures[1]);
             weatherObject.setIconUrl(item.child(2).child(0).attr(FORECAST_ICON_ATTRIBUTE));
             weatherObject.setDescription(item.child(3).text());
             weatherObject.setWind(item.child(4).text());
