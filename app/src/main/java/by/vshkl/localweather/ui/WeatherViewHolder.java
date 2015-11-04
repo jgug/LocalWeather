@@ -30,5 +30,4 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
         weatherTempMin = (TextView) itemView.findViewById(R.id.weather_temp_min);
         weatherIcon = (ImageView) itemView.findViewById(R.id.weather_icon);
     }
-
 }
