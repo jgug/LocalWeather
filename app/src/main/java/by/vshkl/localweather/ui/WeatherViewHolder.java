@@ -8,6 +8,7 @@ import android.widget.TextView;
 import by.vshkl.localweather.R;
 
 public class WeatherViewHolder extends RecyclerView.ViewHolder {
+    TextView weatherDayPart;
     TextView weatherDate;
     TextView weatherDescription;
     TextView weatherWind;
@@ -19,7 +20,8 @@ public class WeatherViewHolder extends RecyclerView.ViewHolder {
 
     public WeatherViewHolder(final View itemView) {
         super(itemView);
-        weatherDate = (TextView) itemView.findViewById(R.id.weather_day_part);
+        weatherDayPart = (TextView) itemView.findViewById(R.id.weather_day_part);
+        weatherDate = (TextView) itemView.findViewById(R.id.weather_date);
         weatherDescription = (TextView) itemView.findViewById(R.id.weather_description);
         weatherWind = (TextView) itemView.findViewById(R.id.weather_wind);
         weatherPressure = (TextView) itemView.findViewById(R.id.weather_pressure);

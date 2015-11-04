@@ -29,7 +29,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
     @Override
     public void onBindViewHolder(WeatherViewHolder holder, int position) {
         WeatherObject weatherObject = weatherList.get(position);
-        holder.weatherDate.setText(weatherObject.getDayPart());
+        holder.weatherDayPart.setText(weatherObject.getDayPart());
+        holder.weatherDate.setText(weatherObject.getDate());
         holder.weatherDescription.setText(weatherObject.getDescription());
         holder.weatherWind.setText(weatherObject.getWind());
         holder.weatherPressure.setText(weatherObject.getPressure());

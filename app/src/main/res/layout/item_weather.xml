@@ -7,7 +7,8 @@
     android:paddingEnd="@dimen/activity_horizontal_margin"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:orientation="vertical">
+    android:background="?android:attr/selectableItemBackground"
+    >
 
     <TextView
         android:id="@+id/weather_date"
@@ -28,7 +29,8 @@
         android:textStyle="bold"
         android:text="Вечер"
         android:layout_below="@+id/weather_date"
-        android:layout_alignStart="@+id/weather_date" />
+        android:layout_alignStart="@+id/weather_date"
+        />
 
     <ImageView
         android:id="@+id/weather_icon"
@@ -39,7 +41,8 @@
         android:src="@drawable/pic"
         android:scaleType="centerCrop"
         android:layout_below="@+id/weather_description"
-        android:layout_toStartOf="@+id/weather_description" />
+        android:layout_toStartOf="@+id/weather_description"
+        />
 
     <TextView
         android:id="@+id/weather_description"
@@ -67,7 +70,8 @@
         android:gravity="start"
         android:text="6–8, Западный, порывы до 11"
         android:layout_below="@+id/weather_description"
-        android:layout_toEndOf="@+id/weather_icon" />
+        android:layout_toEndOf="@+id/weather_icon"
+        />
 
     <TextView
         android:id="@+id/weather_pressure"
@@ -92,7 +96,8 @@
         android:gravity="start"
         android:text="Влажность воздуха 70 %"
         android:layout_below="@+id/weather_pressure"
-        android:layout_toEndOf="@+id/weather_icon" />
+        android:layout_toEndOf="@+id/weather_icon"
+        />
 
     <TextView
         android:id="@+id/weather_temp_max"
@@ -102,7 +107,8 @@
         android:gravity="center"
         android:text="+7"
         android:layout_alignTop="@+id/weather_wind"
-        android:layout_alignStart="@+id/weather_temp_min" />
+        android:layout_alignStart="@+id/weather_temp_min"
+        />
 
     <TextView
         android:id="@+id/weather_temp_min"
@@ -112,6 +118,7 @@
         android:gravity="center"
         android:text="+4"
         android:layout_alignBottom="@+id/weather_humidity"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        />
 
 </RelativeLayout>

@@ -18,9 +18,8 @@ import by.vshkl.localweather.weather.WeatherObject;
 
 public class FetchWeatherHelper {
     private static final String FORECAST_ID = "forecast";
-    private static final String FORECAST_ATTRIBUTE = "onmouseover";
     private static final String FORECAST_ICON_ATTRIBUTE = "src";
-    private static final String DEGREE_SUMBOL = "°";
+    private static final String DEGREE_SYMBOL = "°";
     private static final String WIND_TEXT = "Ветер ";
     private static final String WIND_SPEED_UNITS = " м/c";
     private static final String PRESSURE_TEXT = "Давление ";
@@ -28,6 +27,10 @@ public class FetchWeatherHelper {
     private static final String PRESSURE_UNITS_2 = " мм.рт.ст ";
     private static final String HUMIDITY_TEXT = "Влажность воздуха ";
     private static final String HUMIDITY_UNITS = "%";
+    private static final int DAYS = 7;
+    private static final String[] DAYS_FULL = {"Понедельник", "Вторник", "Среда", "Четверг",
+                                               "Пятница", "Суббота", "Воскресенье"};
+    private static final String[] DAYS_SHORT = {"Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
 
     public List<WeatherObject> fetchWeather() {
         OkHttpClient client = new OkHttpClient();
@@ -53,21 +56,27 @@ public class FetchWeatherHelper {
         if (forecast == null) {
             return null;
         }
-        Elements forecastItems = forecast.getElementsByAttribute(FORECAST_ATTRIBUTE);
-
+        Elements rows = forecast.child(0).children();
+        String date = "stub";
         List<WeatherObject> weatherObjects = new ArrayList<>();
-        for (Element item : forecastItems) {
-            WeatherObject weatherObject = new WeatherObject();
-            weatherObject.setDayPart(item.child(0).text());
-            String[] temperatures = item.child(1).text().split(Pattern.quote(".."));
-            weatherObject.setTemperatureMin(temperatures[0].concat(DEGREE_SUMBOL));
-            weatherObject.setTemperatureMax(temperatures[1].concat(DEGREE_SUMBOL));
-            weatherObject.setIconUrl(item.child(2).child(0).attr(FORECAST_ICON_ATTRIBUTE));
-            weatherObject.setDescription(item.child(3).text());
-            weatherObject.setWind(formatWind(item.child(4).text()));
-            weatherObject.setPressure(formatPressure(item.child(5).text()));
-            weatherObject.setHumidity(formatHumidity(item.child(6).text()));
-            weatherObjects.add(weatherObject);
+        for (Element row : rows) {
+            int children = row.children().size();
+            if (children == 2) {
+                date = formatDate(row.child(0).text());
+            } else if (children == 7) {
+                WeatherObject weatherObject = new WeatherObject();
+                weatherObject.setDayPart(row.child(0).text());
+                String[] temperatures = row.child(1).text().split(Pattern.quote(".."));
+                weatherObject.setTemperatureMin(temperatures[0].concat(DEGREE_SYMBOL));
+                weatherObject.setTemperatureMax(temperatures[1].concat(DEGREE_SYMBOL));
+                weatherObject.setIconUrl(row.child(2).child(0).attr(FORECAST_ICON_ATTRIBUTE));
+                weatherObject.setDescription(row.child(3).text());
+                weatherObject.setWind(formatWind(row.child(4).text()));
+                weatherObject.setPressure(formatPressure(row.child(5).text()));
+                weatherObject.setHumidity(formatHumidity(row.child(6).text()));
+                weatherObject.setDate(date);
+                weatherObjects.add(weatherObject);
+            }
         }
 
         return weatherObjects;
@@ -92,6 +101,19 @@ public class FetchWeatherHelper {
     private static String formatHumidity(String s) {
         StringBuilder builder = new StringBuilder(HUMIDITY_TEXT);
         builder.append(s).append(HUMIDITY_UNITS);
+        return builder.toString();
+    }
+
+    private static String formatDate(String s) {
+        StringBuilder builder = new StringBuilder();
+        String[] tempArr = s.split(Pattern.quote(" "));
+        for (int i = 0; i < DAYS; i++) {
+            if (tempArr[0].contains(DAYS_FULL[i])) {
+                builder.append(DAYS_SHORT[i]);
+                break;
+            }
+        }
+        builder.append(", ").append(tempArr[1]);
         return builder.toString();
     }
 }

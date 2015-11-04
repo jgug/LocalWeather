@@ -30,6 +30,7 @@ public class WeatherFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        recyclerView.setHasFixedSize(true);
         return view;
     }
 
