@@ -12,8 +12,8 @@ import android.widget.Toast;
 import java.util.List;
 
 import by.vshkl.localweather.R;
-import by.vshkl.localweather.services.FetchWeatherResultReceiver;
-import by.vshkl.localweather.services.FetchWeatherService;
+import by.vshkl.localweather.service.FetchWeatherResultReceiver;
+import by.vshkl.localweather.service.FetchWeatherService;
 import by.vshkl.localweather.weather.WeatherObject;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {

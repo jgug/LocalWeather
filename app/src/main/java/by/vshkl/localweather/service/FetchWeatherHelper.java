@@ -1,4 +1,4 @@
-package by.vshkl.localweather.weather;
+package by.vshkl.localweather.service;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -12,6 +12,8 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import by.vshkl.localweather.weather.WeatherObject;
 
 public class FetchWeatherHelper {
     private static final String FORECAST_ID = "forecast";

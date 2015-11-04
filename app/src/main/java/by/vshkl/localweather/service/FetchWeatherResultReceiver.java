@@ -1,4 +1,4 @@
-package by.vshkl.localweather.services;
+package by.vshkl.localweather.service;
 
 import android.os.Bundle;
 import android.os.Handler;
