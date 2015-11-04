@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import by.vshkl.localweather.weather.WeatherObject;
@@ -20,6 +21,14 @@ public class FetchWeatherHelper {
     private static final String FORECAST_ID = "forecast";
     private static final String FORECAST_ATTRIBUTE = "onmouseover";
     private static final String FORECAST_ICON_ATTRIBUTE = "src";
+    private static final String DEGREE_SUMBOL = "°";
+    private static final String WIND_TEXT = "Ветер ";
+    private static final String WIND_SPEED_UNITS = " м/c";
+    private static final String PRESSURE_TEXT = "Давление ";
+    private static final String PRESSURE_UNITS_1 = " гПа ";
+    private static final String PRESSURE_UNITS_2 = " мм.рт.ст ";
+    private static final String HUMIDITY_TEXT = "Влажность воздуха ";
+    private static final String HUMIDITY_UNITS = "%";
 
     public List<WeatherObject> fetchWeather() {
         OkHttpClient client = new OkHttpClient();
@@ -52,16 +61,38 @@ public class FetchWeatherHelper {
             WeatherObject weatherObject = new WeatherObject();
             weatherObject.setDayPart(item.child(0).text());
             String[] temperatures = item.child(1).text().split(Pattern.quote(".."));
-            weatherObject.setTemperatureMin(temperatures[0]);
-            weatherObject.setTemperatureMax(temperatures[1]);
+            weatherObject.setTemperatureMin(temperatures[0].concat(DEGREE_SUMBOL));
+            weatherObject.setTemperatureMax(temperatures[1].concat(DEGREE_SUMBOL));
             weatherObject.setIconUrl(item.child(2).child(0).attr(FORECAST_ICON_ATTRIBUTE));
             weatherObject.setDescription(item.child(3).text());
-            weatherObject.setWind(item.child(4).text());
-            weatherObject.setPressure(item.child(5).text());
-            weatherObject.setHumidity(item.child(6).text());
+            weatherObject.setWind(formatWind(item.child(4).text()));
+            weatherObject.setPressure(formatPressure(item.child(5).text()));
+            weatherObject.setHumidity(formatHumidity(item.child(6).text()));
             weatherObjects.add(weatherObject);
         }
 
         return weatherObjects;
+    }
+
+    private static String formatWind(String s) {
+        String[] tempArr = s.split(Pattern.quote(","), 0);
+        StringBuilder builder = new StringBuilder(WIND_TEXT);
+        builder.append(tempArr[0]).append(WIND_SPEED_UNITS).append(",").append(tempArr[1]);
+        return builder.toString();
+    }
+
+    private static String formatPressure(String s) {
+        String[] tempArr = s.split(Pattern.quote(" "));
+        StringBuilder builder = new StringBuilder(PRESSURE_TEXT);
+        builder.append(tempArr[0]).append(PRESSURE_UNITS_1).append("(")
+                .append(tempArr[1].substring(1, tempArr[1].length() - 1))
+                .append(PRESSURE_UNITS_2).append(")");
+        return builder.toString();
+    }
+
+    private static String formatHumidity(String s) {
+        StringBuilder builder = new StringBuilder(HUMIDITY_TEXT);
+        builder.append(s).append(HUMIDITY_UNITS);
+        return builder.toString();
     }
 }
