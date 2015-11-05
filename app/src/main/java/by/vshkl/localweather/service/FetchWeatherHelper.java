@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import by.vshkl.localweather.weather.BaseObject;
+import by.vshkl.localweather.weather.DateObject;
 import by.vshkl.localweather.weather.WeatherObject;
 
 public class FetchWeatherHelper {
@@ -27,12 +29,8 @@ public class FetchWeatherHelper {
     private static final String PRESSURE_UNITS_2 = " мм.рт.ст ";
     private static final String HUMIDITY_TEXT = "Влажность воздуха ";
     private static final String HUMIDITY_UNITS = "%";
-    private static final int DAYS = 7;
-    private static final String[] DAYS_FULL = {"Понедельник", "Вторник", "Среда", "Четверг",
-                                               "Пятница", "Суббота", "Воскресенье"};
-    private static final String[] DAYS_SHORT = {"Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
 
-    public List<WeatherObject> fetchWeather() {
+    public List<BaseObject> fetchWeather() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url("http://6.pogoda.by/26850").build();
 
@@ -57,12 +55,14 @@ public class FetchWeatherHelper {
             return null;
         }
         Elements rows = forecast.child(0).children();
-        String date = "stub";
-        List<WeatherObject> weatherObjects = new ArrayList<>();
+        String date = "";
+        List<BaseObject> weatherObjects = new ArrayList<>();
         for (Element row : rows) {
             int children = row.children().size();
             if (children == 2) {
-                date = formatDate(row.child(0).text());
+                DateObject dateObject = new DateObject();
+                dateObject.setDate(row.child(0).text());
+                weatherObjects.add(dateObject);
             } else if (children == 7) {
                 WeatherObject weatherObject = new WeatherObject();
                 weatherObject.setDayPart(row.child(0).text());
@@ -74,7 +74,6 @@ public class FetchWeatherHelper {
                 weatherObject.setWind(formatWind(row.child(4).text()));
                 weatherObject.setPressure(formatPressure(row.child(5).text()));
                 weatherObject.setHumidity(formatHumidity(row.child(6).text()));
-                weatherObject.setDate(date);
                 weatherObjects.add(weatherObject);
             }
         }
@@ -101,19 +100,6 @@ public class FetchWeatherHelper {
     private static String formatHumidity(String s) {
         StringBuilder builder = new StringBuilder(HUMIDITY_TEXT);
         builder.append(s).append(HUMIDITY_UNITS);
-        return builder.toString();
-    }
-
-    private static String formatDate(String s) {
-        StringBuilder builder = new StringBuilder();
-        String[] tempArr = s.split(Pattern.quote(" "));
-        for (int i = 0; i < DAYS; i++) {
-            if (tempArr[0].contains(DAYS_FULL[i])) {
-                builder.append(DAYS_SHORT[i]);
-                break;
-            }
-        }
-        builder.append(", ").append(tempArr[1]);
         return builder.toString();
     }
 }

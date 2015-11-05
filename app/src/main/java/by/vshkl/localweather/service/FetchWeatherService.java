@@ -9,7 +9,7 @@ import android.os.ResultReceiver;
 import java.util.ArrayList;
 import java.util.List;
 
-import by.vshkl.localweather.weather.WeatherObject;
+import by.vshkl.localweather.weather.BaseObject;
 
 public class FetchWeatherService extends IntentService {
     private static final String ACTION_FETCH_WEATHER = "by.vshkl.localweather.action.ACTION_FETCH_WEATHER";
@@ -27,10 +27,10 @@ public class FetchWeatherService extends IntentService {
             if (ACTION_FETCH_WEATHER.equals(action)) {
                 final ResultReceiver receiver = intent.getParcelableExtra(EXTRA_RECEIVER);
                 FetchWeatherHelper helper = new FetchWeatherHelper();
-                List<WeatherObject> list = helper.fetchWeather();
+                List<BaseObject> list = helper.fetchWeather();
                 if (list != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putParcelableArrayList(EXTRA_LIST, (ArrayList<WeatherObject>) list);
+                    bundle.putParcelableArrayList(EXTRA_LIST, (ArrayList<BaseObject>) list);
                     receiver.send(Activity.RESULT_OK, bundle);
                 } else {
                     receiver.send(Activity.RESULT_CANCELED, new Bundle());

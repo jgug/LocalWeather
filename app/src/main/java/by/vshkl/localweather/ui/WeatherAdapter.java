@@ -11,40 +11,59 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import by.vshkl.localweather.R;
+import by.vshkl.localweather.weather.BaseObject;
+import by.vshkl.localweather.weather.DateObject;
 import by.vshkl.localweather.weather.WeatherObject;
 
-public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
-    private List<WeatherObject> weatherList;
-    private int widthItem;
+public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private List<BaseObject> weatherList;
+    private int itemWidth;
+    private static final int DATE = 0;
+    private static final int WEATHER = 1;
 
-    public WeatherAdapter(List<WeatherObject> weatherList) {
+    public WeatherAdapter(List<BaseObject> weatherList) {
         this.weatherList = weatherList;
     }
 
     @Override
-    public WeatherViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder viewHolder = null;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_weather, parent, false);
-        return new WeatherViewHolder(view);
+        switch (viewType) {
+            case DATE:
+                View viewDate = inflater.inflate(R.layout.item_date, parent, false);
+                viewHolder = new DateViewHolder(viewDate);
+                break;
+            case WEATHER:
+                View viewWeather = inflater.inflate(R.layout.item_weather, parent, false);
+                viewHolder = new WeatherViewHolder(viewWeather);
+                break;
+        }
+        return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(WeatherViewHolder holder, int position) {
-        WeatherObject weatherObject = weatherList.get(position);
-        holder.weatherDayPart.setText(weatherObject.getDayPart());
-        holder.weatherDate.setText(weatherObject.getDate());
-        holder.weatherDescription.setText(weatherObject.getDescription());
-        holder.weatherWind.setText(weatherObject.getWind());
-        holder.weatherPressure.setText(weatherObject.getPressure());
-        holder.weatherHumidity.setText(weatherObject.getHumidity());
-        holder.weatherTempMax.setText(weatherObject.getTemperatureMax());
-        holder.weatherTempMin.setText(weatherObject.getTemperatureMin());
-        Picasso.with(holder.weatherIcon.getContext()).setIndicatorsEnabled(true); /*For debug*/
-        Picasso.with(holder.weatherIcon.getContext())
-                .load(weatherObject.getIconUrl())
-                .fit()
-                .centerCrop()
-                .into(holder.weatherIcon);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (holder.getItemViewType()) {
+            case DATE:
+                DateViewHolder dateViewHolder = (DateViewHolder) holder;
+                configureDateViewHolder(dateViewHolder, position);
+                break;
+            case WEATHER:
+                WeatherViewHolder weatherViewHolder = (WeatherViewHolder) holder;
+                configureWeatherViewHolder(weatherViewHolder, position);
+                break;
+        }
+    }
+
+    @Override
+    public final int getItemViewType(int position) {
+        if (weatherList.get(position) instanceof DateObject) {
+            return DATE;
+        } else if (weatherList.get(position) instanceof WeatherObject) {
+            return WEATHER;
+        }
+        return -1;
     }
 
     @Override
@@ -57,25 +76,53 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherViewHolder> {
     }
 
     @Override
-    public void onViewAttachedToWindow(final WeatherViewHolder holder) {
+    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
         super.onViewAttachedToWindow(holder);
-        holder.itemView.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        widthItem = holder.weatherIcon.getWidth()
-                                + holder.weatherWind.getPaddingStart()
-                                + holder.itemView.getPaddingStart();
-                        return true;
-                    }
-                });
+        if (holder.getItemViewType() == WEATHER) {
+            final WeatherViewHolder weatherHolder = (WeatherViewHolder) holder;
+            holder.itemView.getViewTreeObserver().addOnPreDrawListener(
+                    new ViewTreeObserver.OnPreDrawListener() {
+                        @Override
+                        public boolean onPreDraw() {
+                            itemWidth = weatherHolder.weatherIcon.getWidth()
+                                    + weatherHolder.weatherWind.getPaddingStart()
+                                    + weatherHolder.itemView.getPaddingStart();
+                            return true;
+                        }
+                    });
+        }
     }
 
-    public int getWidthItem() {
-        return widthItem;
+    public int getItemWidth() {
+        return itemWidth;
     }
 
-    public void updateAdapter(List<WeatherObject> weatherList) {
+    private void configureWeatherViewHolder(WeatherViewHolder holder, int position) {
+        WeatherObject weatherObject = (WeatherObject) weatherList.get(position);
+        if (weatherObject != null) {
+            holder.weatherDayPart.setText(weatherObject.getDayPart());
+            holder.weatherDescription.setText(weatherObject.getDescription());
+            holder.weatherWind.setText(weatherObject.getWind());
+            holder.weatherPressure.setText(weatherObject.getPressure());
+            holder.weatherHumidity.setText(weatherObject.getHumidity());
+            holder.weatherTempMax.setText(weatherObject.getTemperatureMax());
+            holder.weatherTempMin.setText(weatherObject.getTemperatureMin());
+            Picasso.with(holder.weatherIcon.getContext())
+                    .load(weatherObject.getIconUrl())
+                    .fit()
+                    .centerCrop()
+                    .into(holder.weatherIcon);
+        }
+    }
+
+    private void configureDateViewHolder(DateViewHolder holder, int position) {
+        DateObject date = (DateObject) weatherList.get(position);
+        if (date != null) {
+            holder.date.setText(date.getDate());
+        }
+    }
+
+    public void updateAdapter(List<BaseObject> weatherList) {
         this.weatherList = weatherList;
     }
 }

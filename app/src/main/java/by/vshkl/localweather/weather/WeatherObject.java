@@ -3,7 +3,7 @@ package by.vshkl.localweather.weather;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class WeatherObject implements Parcelable {
+public class WeatherObject extends BaseObject {
     private static final String URL = "http://6.pogoda.by/";
 
     private String dayPart;
@@ -14,12 +14,13 @@ public class WeatherObject implements Parcelable {
     private String temperatureMax;
     private String temperatureMin;
     private String iconUrl;
-    private String date;
 
     public WeatherObject() {
+        super();
     }
 
     public WeatherObject(Parcel parcel) {
+        super(parcel);
         dayPart = parcel.readString();
         description = parcel.readString();
         wind = parcel.readString();
@@ -28,7 +29,6 @@ public class WeatherObject implements Parcelable {
         temperatureMax = parcel.readString();
         temperatureMin = parcel.readString();
         iconUrl = parcel.readString();
-        date = parcel.readString();
     }
 
     public String getDayPart() {
@@ -67,9 +67,6 @@ public class WeatherObject implements Parcelable {
         this.dayPart =  (dayPart.substring(0, 1).toUpperCase()).concat(dayPart.substring(1));
     }
 
-    public String getDate() {
-        return date;
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -99,9 +96,6 @@ public class WeatherObject implements Parcelable {
         this.iconUrl = URL + iconUrl;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 
     @Override
     public String toString() {
@@ -114,7 +108,6 @@ public class WeatherObject implements Parcelable {
                 ", temperatureMax='" + temperatureMax + '\'' +
                 ", temperatureMin='" + temperatureMin + '\'' +
                 ", iconUrl='" + iconUrl + '\'' +
-                ", date='" + date + '\'' +
                 '}';
     }
 
@@ -133,7 +126,6 @@ public class WeatherObject implements Parcelable {
         dest.writeString(temperatureMax);
         dest.writeString(temperatureMin);
         dest.writeString(iconUrl);
-        dest.writeString(date);
     }
 
     public static final Parcelable.Creator<WeatherObject> CREATOR =

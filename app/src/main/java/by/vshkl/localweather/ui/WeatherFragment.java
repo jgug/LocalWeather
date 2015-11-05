@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import by.vshkl.localweather.R;
-import by.vshkl.localweather.weather.WeatherObject;
+import by.vshkl.localweather.weather.BaseObject;
 
 public class WeatherFragment extends Fragment {
     RecyclerView recyclerView;
@@ -40,7 +40,7 @@ public class WeatherFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    public void setRecyclerViewAdapter(List<WeatherObject> list) {
+    public void setRecyclerViewAdapter(List<BaseObject> list) {
         if (adapter == null) {
             adapter = new WeatherAdapter(list);
         } else {

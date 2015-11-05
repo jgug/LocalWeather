@@ -16,6 +16,7 @@ import java.util.List;
 import by.vshkl.localweather.R;
 import by.vshkl.localweather.service.FetchWeatherResultReceiver;
 import by.vshkl.localweather.service.FetchWeatherService;
+import by.vshkl.localweather.weather.BaseObject;
 import by.vshkl.localweather.weather.WeatherObject;
 import io.paperdb.Paper;
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void onReceiverResult(int resultCode, Bundle resultData) {
                 if (resultCode == RESULT_OK) {
-                    List<WeatherObject> list = resultData.getParcelableArrayList(EXTRA_LIST);
+                    List<BaseObject> list = resultData.getParcelableArrayList(EXTRA_LIST);
                     swipeRefreshLayout.setRefreshing(false);
                     fragment.setRecyclerViewAdapter(list);
                     writeToDb(list);
@@ -83,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         if (isNetworkAvailable()) {
             startService();
         } else {
-            swipeRefreshLayout.setRefreshing(false);
             showSnackbar("No connection");
         }
     }
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         return networkInfo != null && networkInfo.isConnected();
     }
 
-    private void writeToDb(final List<WeatherObject> weatherObjects) {
+    private void writeToDb(final List<BaseObject> weatherObjects) {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             @Override
             public void run() {
                 if (Paper.book(DB_BOOK_NAME).exist(DB_ITEM_NAME)) {
-                    final List<WeatherObject> list = Paper.book(DB_BOOK_NAME).read(DB_ITEM_NAME);
+                    final List<BaseObject> list = Paper.book(DB_BOOK_NAME).read(DB_ITEM_NAME);
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

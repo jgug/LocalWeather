@@ -4,8 +4,11 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import by.vshkl.localweather.R;
 
 /*
  * Copyright (C) 2014 The Android Open Source Project
@@ -42,7 +45,7 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     public void drawVertical(Canvas c, RecyclerView parent) {
-        final int left = ((WeatherAdapter) parent.getAdapter()).getWidthItem();
+        final int left = ((WeatherAdapter) parent.getAdapter()).getItemWidth();
         final int right = parent.getWidth();
 
         final int childCount = parent.getChildCount();
