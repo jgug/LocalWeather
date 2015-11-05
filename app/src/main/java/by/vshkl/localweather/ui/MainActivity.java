@@ -5,9 +5,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.view.View;
 
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private static final String DB_ITEM_NAME = "weather_objects";
 
     private SwipeRefreshLayout swipeRefreshLayout;
+    private CoordinatorLayout coordinator;
     private FetchWeatherResultReceiver receiver;
     private WeatherFragment fragment;
 
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        coordinator = (CoordinatorLayout) findViewById(R.id.coordinator);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         setupServiceReceiver();
@@ -47,12 +51,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        if (isNetworkAvailable()) {
-            startService();
-        } else {
-            swipeRefreshLayout.setRefreshing(false);
-            Toast.makeText(this, "No network connection", Toast.LENGTH_SHORT).show();
-        }
+        refresh();
     }
 
     private void startService() {
@@ -74,14 +73,30 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                     writeToDb(list);
                 } else if (resultCode == RESULT_CANCELED) {
                     swipeRefreshLayout.setRefreshing(false);
-                    Toast.makeText(
-                            getApplicationContext(),
-                            "Something goes wrong...",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    showSnackbar("Connection timeout");
                 }
             }
         });
+    }
+
+    private void refresh() {
+        if (isNetworkAvailable()) {
+            startService();
+        } else {
+            swipeRefreshLayout.setRefreshing(false);
+            showSnackbar("No connection");
+        }
+    }
+
+    private void showSnackbar(String text) {
+        Snackbar snackbar = Snackbar.make(coordinator, text, Snackbar.LENGTH_LONG);
+        snackbar.setAction("RETRY", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refresh();
+            }
+        });
+        snackbar.show();
     }
 
     private boolean isNetworkAvailable() {
