@@ -17,7 +17,6 @@ import by.vshkl.localweather.R;
 import by.vshkl.localweather.service.FetchWeatherResultReceiver;
 import by.vshkl.localweather.service.FetchWeatherService;
 import by.vshkl.localweather.weather.BaseObject;
-import by.vshkl.localweather.weather.WeatherObject;
 import io.paperdb.Paper;
 
 public class MainActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
@@ -85,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             startService();
         } else {
             showSnackbar("No connection");
+            swipeRefreshLayout.setRefreshing(false);
         }
     }
 

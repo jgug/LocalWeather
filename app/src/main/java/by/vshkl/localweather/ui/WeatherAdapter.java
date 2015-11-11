@@ -35,7 +35,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 viewHolder = new DateViewHolder(viewDate);
                 break;
             case WEATHER:
-                View viewWeather = inflater.inflate(R.layout.item_weather, parent, false);
+                View viewWeather = inflater.inflate(R.layout.item_weather_new, parent, false);
                 viewHolder = new WeatherViewHolder(viewWeather);
                 break;
         }

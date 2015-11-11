@@ -12,105 +12,106 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="8dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         >
-
-        <TextView
-            android:id="@+id/weather_day_part"
-            android:layout_width="48dp"
-            android:layout_height="36dp"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:text="Вечер"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            />
 
         <ImageView
             android:id="@+id/weather_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/pic"
             android:scaleType="centerCrop"
-            android:layout_below="@+id/weather_day_part"
-            android:layout_alignParentStart="true"
             />
 
         <TextView
             android:id="@+id/weather_description"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:layout_height="40dp"
+            android:paddingStart="56dp"
+            android:paddingEnd="56dp"
             android:maxLines="2"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:gravity="start"
             android:textStyle="bold"
             android:text="Небольшая облачность. Без осадков."
-            android:layout_alignTop="@+id/weather_day_part"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/weather_wind"
+            />
+
+        <TextView
+            android:id="@+id/weather_day_part"
+            android:layout_width="40dp"
+            android:layout_height="18dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="Вечер"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             />
 
         <TextView
             android:id="@+id/weather_wind"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="56dp"
+            android:paddingEnd="56dp"
             android:textSize="14sp"
             android:gravity="start"
             android:text="6–8, Западный, порывы до 11"
-            android:layout_below="@+id/weather_description"
-            android:layout_toEndOf="@+id/weather_icon"
+            android:layout_alignTop="@+id/weather_temp_max"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             />
 
         <TextView
             android:id="@+id/weather_pressure"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="56dp"
+            android:paddingEnd="56dp"
             android:textSize="14sp"
             android:gravity="start"
             android:text="Давление 1031 гПа"
             android:layout_below="@+id/weather_wind"
-            android:layout_toEndOf="@+id/weather_icon"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             />
 
         <TextView
             android:id="@+id/weather_humidity"
             android:layout_width="wrap_content"
             android:layout_height="18dp"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
+            android:paddingStart="56dp"
+            android:paddingEnd="56dp"
             android:textSize="14sp"
             android:gravity="start"
             android:text="Влажность воздуха 70 %"
             android:layout_below="@+id/weather_pressure"
-            android:layout_toEndOf="@+id/weather_icon"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
             />
 
         <TextView
             android:id="@+id/weather_temp_max"
-            android:layout_width="36dp"
-            android:layout_height="27dp"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
             android:textSize="16sp"
             android:gravity="center"
             android:text="+7"
-            android:layout_alignTop="@+id/weather_wind"
+            android:layout_below="@+id/weather_description"
             android:layout_alignStart="@+id/weather_temp_min"
             />
 
         <TextView
             android:id="@+id/weather_temp_min"
-            android:layout_width="36dp"
-            android:layout_height="27dp"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
             android:textSize="16sp"
             android:gravity="center"
             android:text="+4"

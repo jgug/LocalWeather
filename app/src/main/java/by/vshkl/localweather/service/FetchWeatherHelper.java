@@ -91,9 +91,11 @@ public class FetchWeatherHelper {
     private static String formatPressure(String s) {
         String[] tempArr = s.split(Pattern.quote(" "));
         StringBuilder builder = new StringBuilder(PRESSURE_TEXT);
-        builder.append(tempArr[0]).append(PRESSURE_UNITS_1).append("(")
-                .append(tempArr[1].substring(1, tempArr[1].length() - 1))
-                .append(PRESSURE_UNITS_2).append(")");
+//        builder.append(tempArr[0]).append(PRESSURE_UNITS_1).append("(")
+//                .append(tempArr[1].substring(1, tempArr[1].length() - 1))
+//                .append(PRESSURE_UNITS_2).append(")");
+        builder.append(tempArr[1].substring(1, tempArr[1].length() - 1))
+                .append(PRESSURE_UNITS_2);
         return builder.toString();
     }
 

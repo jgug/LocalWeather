@@ -45,7 +45,8 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     }
 
     public void drawVertical(Canvas c, RecyclerView parent) {
-        final int left = ((WeatherAdapter) parent.getAdapter()).getItemWidth();
+//        final int left = ((WeatherAdapter) parent.getAdapter()).getItemWidth();
+        final int left = 0;
         final int right = parent.getWidth();
 
         final int childCount = parent.getChildCount();
